@@ -1,0 +1,9 @@
+.bg_img {
+  background-image: url("bg_img.avif");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  height: 700px;
+  width: 100%;
+
+  
+}
