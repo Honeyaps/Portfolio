@@ -1,6 +1,7 @@
-import "./nav.css";
 import { useState } from "react";
-import { BiMenu } from "react-icons/bi";
+import { CgMenuLeftAlt, CgMenuRightAlt } from "react-icons/cg";
+import { GoDotFill } from "react-icons/go";
+import "./nav.css";
 
 export default function Navbar() {
   const [showMobileLinks, setShowMobileLinks] = useState(false);
@@ -9,28 +10,27 @@ export default function Navbar() {
     setShowMobileLinks(false);
   };
 
-  const links = ["Home", "Add", "Thrive", "Insights"];
-
   return (
     <>
       <div className="navbar">
-        <h1 className="logo" onClick={handleLinkClick}>Portfolio</h1>
-        <ul className="links">
-          {links.map((link, index) => (
-            <li key={index} onClick={handleLinkClick} className="home">{link}</li>
-          ))}
-        </ul>
-        <button className="menu_btn" onClick={() => setShowMobileLinks(!showMobileLinks)}>
-          <BiMenu />
+        <h1 className="logo" onClick={handleLinkClick}>
+          <GoDotFill />
+          <GoDotFill />
+        </h1>
+
+        <button
+          className="menu_btn"
+          onClick={() => setShowMobileLinks(!showMobileLinks)}
+        >
+          {showMobileLinks ? <CgMenuLeftAlt /> : <CgMenuRightAlt />}
         </button>
       </div>
 
       {showMobileLinks && (
         <div className="mobile_navbar">
           <ul className="mobile_links">
-            {links.map((link, index) => (
-              <li key={index} onClick={handleLinkClick}>{link}</li>
-            ))}
+            <li onClick={handleLinkClick}>Home</li>
+            <li onClick={handleLinkClick}>About</li>
           </ul>
         </div>
       )}

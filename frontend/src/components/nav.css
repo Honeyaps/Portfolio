@@ -1,63 +1,72 @@
 * {
-    margin: 0;
-    padding: 0;
-  }
-  
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgba(36, 36, 36, 0.8); /* Semi-transparent background */
-    backdrop-filter: blur(10px); /* Blur effect */
-    color: white;
-    height: 60px;
-    position: fixed; /* Fixed position */
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-  }
-  
-  .links {
-    display: none;
-    gap: 30px;
-  }
-  
-  li {
-    list-style: none;
-  }
-  
-  .home {
-    cursor: pointer;
-    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  }
-  
-  .links .active {
-    color: orange;
-  }
-  
-  .home:hover {
-    color: orange;
-    transition: 0.1s ease-in-out;
-  }
-  
-  .logo {
-    cursor: pointer;
-    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  }
-  
- 
+  margin: 0;
+  padding: 0;
+}
 
-  .menu_btn {
-    display: block;
-    border: none;
-    font-size: 32px;
-    color: white;
-    background-color: transparent;
-    cursor: pointer;
-    margin-right: 20px;
-  }
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(205, 205, 205, 0.1); /* Semi-transparent background */
+  backdrop-filter: blur(6px); /* Blur effect */
+  color: rgb(28, 28, 28);
+  height: 60px;
+  position: fixed; /* Fixed position */
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
 
+.logo {
+  cursor: pointer;
+  font-size: 40px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  margin-left: 20px;
+}
+
+.menu_btn {
+  display: block;
+  border: none;
+  font-size: 32px;
+  color: rgb(0, 0, 0);
+  background-color: transparent;
+  cursor: pointer;
+  margin-right: 20px;
+  margin-top: 2px;
+}
+
+.mobile_navbar {
+  display: block;
+  position: fixed;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: rgba(205, 205, 205, 0.1); /* Semi-transparent background */
+  backdrop-filter: blur(6px); /* Blur effect */
+  top: 60px;
+  right: 0;
+  width: 20%;
+  height: 800px;
+  text-align: center;
+  z-index: 999;
+
+}
+
+.mobile_links {
+  list-style: none;
+  padding: 20px 0;
+  cursor: pointer;
+}
+
+.mobile_links li {
+  margin: 20px 0;
+  font-size: 18px;
+}
+
+.mobile_links li:hover {
+  color: darkgray;
+}
+
+@media screen and (max-width: 900px) {
   .mobile_navbar {
     display: block;
     position: fixed;
@@ -68,6 +77,7 @@
     backdrop-filter: blur(10px);
     text-align: center;
     z-index: 999;
+    transition: 0.2s ease-in-out;
   }
 
   .mobile_links {
@@ -79,46 +89,22 @@
     margin: 20px 0;
     font-size: 18px;
   }
-  
-  @media screen and (max-width: 900px) {
-    
-  
-    .mobile_navbar {
-      display: block;
-      position: fixed;
-      top: 60px;
-      right: 0;
-      width: 100%;
-      background-color: rgba(229, 229, 229, 0.9);
-      backdrop-filter: blur(10px);
-      text-align: center;
-      z-index: 999;
-    }
-  
-    .mobile_links {
-      list-style: none;
-      padding: 20px 0;
-    }
-  
-    .mobile_links li {
-      margin: 20px 0;
-      font-size: 18px;
-    }
-  
-    
+}
+
+@media screen and (max-width: 500px) {
+  .navbar {
+    height: 37px;
+    transition: 0.2s ease-in-out;
   }
-  
-  @media screen and (max-width: 500px) {
-    .navbar {
-      height: 50px;
-    }
-  
-    .logo {
-      font-size: 20px;
-    }
-  
-    .menu_btn {
-      font-size: 25px;
-    }
+
+  .logo {
+    font-size: 15px;
+    transition: 0.2s ease-in-out;
   }
-  
+
+  .menu_btn {
+    margin-top: 2px;
+    font-size: 19px;
+    transition: 0.2s ease-in-out;
+  }
+}
