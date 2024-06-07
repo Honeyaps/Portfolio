@@ -195,7 +195,7 @@ export default function Home() {
         </div>
 
         <div className="insta_btn_div">
-          <a href="https://instagram.com" className="insta_btn">
+          <a href="https://www.instagram.com/__honey_001?igsh=MTRxeGV4a2F5dWFrOA==" className="insta_btn">
             <FiInstagram /> Follow me on Instagram
           </a>
         </div>
@@ -206,7 +206,7 @@ export default function Home() {
       <br />
 
       {/* Client thinking about me */}
-      <h1 className="wik">Testimonial</h1>
+      <h1 className="wik">Testmonial</h1>
       <div className="client_contnr">
         <div className="client_div">
           <p>
