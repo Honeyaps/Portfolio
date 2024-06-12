@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Navbar from '../components/nav';
 import './page.css';
 import { FiInstagram } from 'react-icons/fi';
+import { MdLocationPin } from "react-icons/md";
+import { IoMdMail } from "react-icons/io";
 import axios from 'axios';
 
 export default function Home() {
@@ -148,7 +150,7 @@ export default function Home() {
           <h2 className="lang_head">Projects</h2>
           <br />
           <div className="inner_proj_div">
-            <a href="https://github.com/Honeyaps" className="project_link">
+            <a href="https://github.com/Honeyaps?tab=repositories" className="project_link">
               <p className="proj_head">Expense-Tracker</p>
               <p className="proj_desc">
                 React.js, react-chart-js2, Node.js, Express.js, Mongodb
@@ -157,7 +159,7 @@ export default function Home() {
           </div>
           <br />
           <div className="inner_proj_div">
-            <a href="https://github.com/Honeyaps" className="project_link">
+            <a href="https://github.com/Honeyaps?tab=repositories" className="project_link">
               <p className="proj_head">Blog-app</p>
               <p className="proj_desc">
                 React.js, Node.js, Express.js, Mongodb, Firebase
@@ -166,7 +168,7 @@ export default function Home() {
           </div>
           <br />
           <div className="inner_proj_div">
-            <a href="https://github.com/Honeyaps" className="project_link">
+            <a href="https://github.com/Honeyaps?tab=repositories" className="project_link">
               <p className="proj_head">E-Commerce</p>
               <p className="proj_desc">
                 React.js , Node.js, Express.js, Mongodb, Firebase
@@ -175,7 +177,7 @@ export default function Home() {
           </div>
           <br />
           <div className="inner_proj_div">
-            <a href="https://github.com/Honeyaps" className="project_link">
+            <a href="https://github.com/Honeyaps?tab=repositories" className="project_link">
               <p className="proj_head">Game-Space</p>
               <p className="proj_desc">HTML, CSS, Bootstrap</p>
             </a>
@@ -233,52 +235,14 @@ export default function Home() {
       <br />
       <br />
 
-      {/* Contact me */}
-      <div className="contact_contnr">
-        <h1 className="wik">Contact Me</h1>
-        <br /><br />
-        <form onSubmit={handleSubmit}>
-          <div className="two_inputs">
-            <div>
-              <input
-                type="text"
-                name="name"
-                placeholder="Your name"
-                className="inputs1"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-              {errors.name && <p className="error">{errors.name}</p>}
-            </div>
-            <div>
-              <input
-                type="email"
-                name="email"
-                placeholder="Your Email"
-                className="inputs2"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-              {errors.email && <p className="error">{errors.email}</p>}
-            </div>
-          </div>
-          <div className="full_input">
-            <input
-              type="text"
-              name="message"
-              placeholder="Write Something here"
-              className="inputs3"
-              value={formData.message}
-              onChange={handleChange}
-              required
-            />
-            {errors.message && <p className="error">{errors.message}</p>}
-          </div>
-          <button type="submit" className="snd_msg">Send Message</button>
-        </form>
+      {/* footer */}
+      <hr/>
+      <div className='footer_cntnr'>
+      
+        <p><IoMdMail />honeyaps12345@gmail.com</p>
+        <p><MdLocationPin />Chandigarh, Punjab</p>
       </div>
+     
     </>
   );
 }
