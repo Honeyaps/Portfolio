@@ -1,6 +1,7 @@
+body{background-color: #131313;}
+
 .bg_img {
-  background: rgb(166,166,166);
-background: linear-gradient(180deg, rgba(166,166,166,1) 0%, rgba(165,165,165,1) 1%, rgba(176,176,176,1) 8%, rgba(193,193,193,1) 28%, rgba(221,221,221,1) 52%, rgba(255,255,255,1) 81%, rgba(255,255,255,1) 92%, rgba(255,255,255,1) 100%);
+ 
   height: 670px;
   text-align: center;
 }
@@ -15,7 +16,7 @@ background: linear-gradient(180deg, rgba(166,166,166,1) 0%, rgba(165,165,165,1) 
 
 .heading_div {
   position: absolute;
-  left: 32%;
+  left: 20%;
   top: 27%;
   text-align: left;
 }
@@ -23,30 +24,51 @@ background: linear-gradient(180deg, rgba(166,166,166,1) 0%, rgba(165,165,165,1) 
 .hi {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   font-size: 70px;
-  color: rgb(99, 99, 99);
+  color: rgb(125, 125, 125);
 }
 
 .name {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   font-size: 75px;
-  color: rgb(51, 51, 51);
+  color: rgb(255, 255, 255);
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: .10em solid rgb(145, 145, 145); /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: .10em; /* Adjust as needed */
+  animation: 
+    typing 1.4s steps(40, end),
+    blink-caret .75s step-end infinite;
 }
+
+/* The typing effect */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: rgb(151, 151, 151); }
+}
+
+/* // */
 
 .dev {
   font-family: "Roboto Mono", monospace;
   font-size: 40px;
-  color: rgb(63, 63, 63);
+  color: rgb(255, 255, 255);
 }
 
 .visit {
   font-size: 16px;
   padding: 10px 15px 10px 15px;
   text-decoration: none;
-  color: black;
   border-radius: 20px;
-  border: 1px solid black;
+  border: 1px solid rgb(255, 255, 255);
   background-color: transparent;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
@@ -64,7 +86,7 @@ background: linear-gradient(180deg, rgba(166,166,166,1) 0%, rgba(165,165,165,1) 
 }
 
 .h1_abt {
-  color: #414141;
+  color: #ffffff;
 }
 
 .about {
@@ -73,28 +95,48 @@ background: linear-gradient(180deg, rgba(166,166,166,1) 0%, rgba(165,165,165,1) 
 }
 
 .text_abt_me {
-  font-family: cursive;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: white;
 }
 
 .img {
-  height: 450px;
+  height: 400px;
   width: 400px;
-  margin-top: -30%;
+  margin-top: -25px;
+  animation: imgborder 11s infinite ease-in-out;
 }
+
+@keyframes imgborder {
+  0% {
+    border-radius: 47% 53% 73% 27% / 19% 25% 75% 81%;
+  }
+  25% {
+    border-radius: 47% 53% 73% 27% / 55% 33% 67% 45%;
+  }
+  50% {
+    border-radius: 47% 53% 73% 27% / 81% 60% 40% 19%;
+  }
+  75% {
+    border-radius: 27% 73% 19% 81% / 55% 33% 67% 45%;
+  }
+  100% {
+    border-radius: 27% 73% 19% 81% / 19% 25% 75% 81%;
+  }
+}
+
 
 .dnld_cv {
   font-size: 20px;
   padding: 10px 20px 10px 20px;
-  border: 1px solid black;
+  border: 1px solid rgb(255, 255, 255);
   text-decoration: none;
   border-radius: 28px;
-  color: #323232;
+  color: #ffffff;
 }
 
 .dnld_cv:hover {
   background-color: #414141;
   color: white;
-  border: none;
   transition: 0.3s ease-in-out;
 }
 
@@ -110,7 +152,7 @@ background: linear-gradient(180deg, rgba(166,166,166,1) 0%, rgba(165,165,165,1) 
 .wik {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   text-align: center;
-  color: #414141;
+  color: #ffffff;
 }
 
 span {
@@ -186,7 +228,7 @@ transition: 0.3s ease-in-out;}
   background-color: rgb(232, 232, 232);
 }
 
-.inner_proj_div:hover{background-color: white;
+.inner_proj_div:hover{background-color: rgb(183, 183, 183);
 transition: 0.3s ease-in-out;}
 
 .hire_sec {
@@ -238,15 +280,17 @@ transition: 0.3s ease-in-out;}
 
 .client_div {
   border: 1px solid rgb(194, 194, 194);
+  border-radius: 8px;
   padding: 15px;
   margin-right: 5%;
+  color: white;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 .footer_cntnr{font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
   Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-color: rgb(78, 78, 78);
+color: rgb(255, 255, 255);
 font-size: 13px;
 padding: 10px 0 20px 20px;} 
 
@@ -391,6 +435,10 @@ padding: 10px 0 20px 20px;}
     font-size: 10px;
     transition: 0.2s ease-in-out;
   }
+
+  .footer_cntnr p{
+    font-size: 7px;
+  }
 }
 
 @media screen and (max-width: 690px) {
@@ -406,24 +454,25 @@ padding: 10px 0 20px 20px;}
   }
 
   .hi {
-    font-size: 25px;
+    font-size: 20px;
     transition: 0.2s ease-in-out;
   }
 
   .name {
-    font-size: 25px;
+    font-size: 20px;
     transition: 0.2s ease-in-out;
   }
 
   .dev {
-    font-size: 25px;
+    font-size: 15px;
     transition: 0.2s ease-in-out;
   }
 
   .visit {
-    font-size: 10px;
+    font-size: 8px;
     position: absolute;
     top: 75%;
+    padding: 8px;
     transition: 0.2s ease-in-out;
   }
 

@@ -7,8 +7,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(205, 205, 205, 0.1); /* Semi-transparent background */
-  backdrop-filter: blur(6px); /* Blur effect */
+  background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+  backdrop-filter: blur(8px); /* Blur effect */
+  border-radius: 0px;
+  box-shadow: 16px 16px 32px #1b1b1b, -16px -16px 32px #464646;
   color: rgb(28, 28, 28);
   height: 60px;
   position: fixed; /* Fixed position */
@@ -29,7 +31,7 @@
   display: block;
   border: none;
   font-size: 32px;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   background-color: transparent;
   cursor: pointer;
   margin-right: 20px;
@@ -48,13 +50,13 @@
   height: 800px;
   text-align: center;
   z-index: 999;
-
 }
 
 .mobile_links {
   list-style: none;
   padding: 20px 0;
   cursor: pointer;
+  color: white;
 }
 
 .mobile_links li {

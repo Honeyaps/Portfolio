@@ -1,53 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { FiInstagram } from 'react-icons/fi';
+import { IoMdMail } from "react-icons/io";
+import { MdLocationPin } from "react-icons/md";
 import Navbar from '../components/nav';
 import './page.css';
-import { FiInstagram } from 'react-icons/fi';
-import { MdLocationPin } from "react-icons/md";
-import { IoMdMail } from "react-icons/io";
-import axios from 'axios';
 
 export default function Home() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
-
-  const [errors, setErrors] = useState({});
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const validate = () => {
-    let tempErrors = {};
-    tempErrors.name = formData.name ? '' : 'Name is required';
-    tempErrors.email = formData.email ? '' : 'Email is required';
-    tempErrors.email = /\S+@\S+\.\S+/.test(formData.email) ? '' : 'Email is not valid';
-    tempErrors.message = formData.message ? '' : 'Message is required';
-    setErrors(tempErrors);
-    return Object.values(tempErrors).every(x => x === '');
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (validate()) {
-      try {
-        const response = await axios.post('http://localhost:4400/message', formData);
-        alert("Message sent succesfuly");
-        setFormData({
-          name: '',
-          email: '',
-          message: ''
-        });
-      } catch (error) {
-        alert('Error submitting form');
-      }
-    }
-  };
 
   return (
     <>
@@ -72,10 +30,12 @@ export default function Home() {
         </div>
       </div>
 
+      <br/>  
+
       {/* ABOUT SECTION */}
       <div className="about_sec">
         <div className="img_div">
-          <img src="IMG_20221210_234743.jpg" className="img" alt="Hemant Singh" />
+          <img src="mypic.jpg" className="img" alt="Hemant Singh" />
         </div>
         <div className="about">
           <h1 className="h1_abt">About Me</h1>
@@ -238,7 +198,6 @@ export default function Home() {
       {/* footer */}
       <hr/>
       <div className='footer_cntnr'>
-      
         <p><IoMdMail />honeyaps12345@gmail.com</p>
         <p><MdLocationPin />Chandigarh, Punjab</p>
       </div>
