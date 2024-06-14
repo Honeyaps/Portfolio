@@ -19,6 +19,7 @@ export default function Home() {
         <div className="heading_div">
           <h1 className="hi">HI!</h1>
           <h1 className="name">I am Hemant Singh</h1>
+
           <br />
           <p className="dev">MERN STACK DEVELOPER</p>
           <br />
@@ -71,10 +72,35 @@ export default function Home() {
       <br />
       <br />
       <br />
+      <br />
+      <br />
 
-      {/* LANGUAGES */}
+      {/* what i know */}
 
       <h1 className="wik">What I Know?</h1>
+      <br/><br/><br/>
+      <div className='tech_div'>
+        <div>
+          <img src="icons (1).svg" className='icons' />
+        </div>
+        <div>
+          <img src="icons (2).svg" className='icons' />
+        </div>
+        <div>
+          <img src="icons.svg" className='icons' />
+        </div>
+        <div>
+          <img src="icons1.svg" className='icons' />
+        </div>
+        <div>
+          <img src="icons2.svg" className='icons' />
+        </div>
+        <div>
+          <img src="icons3.svg" className='icons' />
+        </div>
+      </div>
+      <br/>
+      {/* languages */}
       <div className="lang_div_contnr">
         <div className="frontend">
           <h2 className="lang_head">Frontend</h2>
