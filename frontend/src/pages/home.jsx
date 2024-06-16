@@ -4,12 +4,14 @@ import { IoMdMail } from "react-icons/io";
 import { MdLocationPin } from "react-icons/md";
 import Navbar from '../components/nav';
 import './page.css';
-//motion
-import {motion} from 'framer-motion'
-// variants
-import {fadeIn} from '../variants'
+import Aos from 'aos';
+import 'aos/dist/aos.css';
+import { useEffect } from 'react';
 
 export default function Home() {
+  useEffect(() => {
+    Aos.init({ duration: 1000 });
+  }, []);
 
   return (
     <>
@@ -20,14 +22,7 @@ export default function Home() {
         <br />
         <br />
         <br />
-        <motion.div
-
-        variants={fadeIn("up", 0.2)}
-        initial="hidden"
-        whileInView={"show"}
-        viewport={{once: false, amount: 0.7}}
-        
-        className="heading_div">
+        <div className="heading_div">
           <h1 className="hi">HI!</h1>
           <h1 className="name">I am Hemant Singh</h1>
 
@@ -39,18 +34,18 @@ export default function Home() {
           <a href="https://github.com/Honeyaps" className="visit">
             Visit My Work
           </a>
-        </motion.div>
+        </div>
       </div>
 
       <br/>  
 
       {/* ABOUT SECTION */}
       <div className="about_sec">
-        <div className="img_div">
+        <div className="img_div"  data-aos="fade-right">
           <img src="mypic.jpg" className="img" alt="Hemant Singh" />
         </div>
-        <div className="about">
-          <h1 className="h1_abt">About Me</h1>
+        <div className="about" data-aos="fade-left">
+          <h1 className="h1_abt">ABOUT ME</h1>
           <br />
           <p className="text_abt_me">
             As a dedicated and proficient MERN Stack Developer, I bring
@@ -88,9 +83,9 @@ export default function Home() {
 
       {/* what i know */}
 
-      <h1 className="wik">What I Know?</h1>
+      <h1 className="wik" >TECH STACK</h1>
       <br/><br/><br/>
-      <div className='tech_div'>
+      <div className='tech_div' data-aos="zoom-in">
         <div>
           <img src="icons (1).svg" className='icons' />
         </div>
@@ -110,10 +105,11 @@ export default function Home() {
           <img src="icons3.svg" className='icons' />
         </div>
       </div>
-      <br/>
+      <br/><br/><br/>
       {/* languages */}
-      <div className="lang_div_contnr">
-        <div className="frontend">
+      <h1 className="wik" >WHAT I KNOW?</h1>
+      <div className="lang_div_contnr" >
+        <div className="frontend" data-aos="flip-left">
           <h2 className="lang_head">Frontend</h2>
           <br />
           <span>HTML</span>
@@ -125,7 +121,7 @@ export default function Home() {
           <span>React js</span>
         </div>
 
-        <div className="backend">
+        <div className="backend" data-aos="flip-left">
           <h2 className="lang_head">Backend</h2>
           <br />
           <span>Node.js</span>
@@ -133,7 +129,7 @@ export default function Home() {
           <br />
         </div>
 
-        <div className="database">
+        <div className="database"  data-aos="flip-left">
           <h2 className="lang_head">Database</h2>
           <br />
           <span>MongoDB</span>
@@ -143,7 +139,7 @@ export default function Home() {
           <span>MongoDB Atlas</span>
         </div>
 
-        <div className="projects">
+        <div className="projects" data-aos="flip-left">
           <h2 className="lang_head">Projects</h2>
           <br />
           <div className="inner_proj_div">
@@ -187,13 +183,13 @@ export default function Home() {
       <br />
       {/* HIRE ME */}
       <div className="hire_sec">
-        <div>
+        <div data-aos="fade-right">
           <h2>Want to work with me ?</h2>
           <br />
           <p>Always feel free to Contact & Hire me</p>
         </div>
 
-        <div className="insta_btn_div">
+        <div className="insta_btn_div" data-aos="fade-left">
           <a href="https://www.instagram.com/__honey_001?igsh=MTRxeGV4a2F5dWFrOA==" className="insta_btn">
             <FiInstagram /> Follow me on Instagram
           </a>
@@ -205,9 +201,9 @@ export default function Home() {
       <br />
 
       {/* Client thinking about me */}
-      <h1 className="wik">Testmonial</h1>
+      <h1 className="wik" >Testmonial</h1>
       <div className="client_contnr">
-        <div className="client_div">
+        <div className="client_div" data-aos="fade-up-right">
           <p>
             "Exceptional MERN Stack developer! Delivered high-quality, scalable
             applications on time. Great communication and problem-solving
@@ -217,7 +213,7 @@ export default function Home() {
           <h3>John</h3>
         </div>
 
-        <div className="client_div">
+        <div className="client_div" data-aos="fade-up-left">
           <p>
             "Outstanding MERN Stack developer! Consistently delivered top-notch,
             scalable applications ahead of schedule. Excellent problem-solving
