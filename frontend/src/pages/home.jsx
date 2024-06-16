@@ -4,6 +4,10 @@ import { IoMdMail } from "react-icons/io";
 import { MdLocationPin } from "react-icons/md";
 import Navbar from '../components/nav';
 import './page.css';
+//motion
+import {motion} from 'framer-motion'
+// variants
+import {fadeIn} from '../variants'
 
 export default function Home() {
 
@@ -16,7 +20,14 @@ export default function Home() {
         <br />
         <br />
         <br />
-        <div className="heading_div">
+        <motion.div
+
+        variants={fadeIn("up", 0.2)}
+        initial="hidden"
+        whileInView={"show"}
+        viewport={{once: false, amount: 0.7}}
+        
+        className="heading_div">
           <h1 className="hi">HI!</h1>
           <h1 className="name">I am Hemant Singh</h1>
 
@@ -28,7 +39,7 @@ export default function Home() {
           <a href="https://github.com/Honeyaps" className="visit">
             Visit My Work
           </a>
-        </div>
+        </motion.div>
       </div>
 
       <br/>  
