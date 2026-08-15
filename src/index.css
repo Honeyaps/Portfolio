@@ -1,0 +1,992 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html.lenis, html.lenis body { height: auto; }
+  html.lenis.lenis-smooth { scroll-behavior: auto !important; }
+  html.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+  html.lenis.lenis-stopped { overflow: hidden; }
+  body {
+    background: #0a0a0a;
+    color: #fafafa;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+  ::selection { background: #6366f1; color: #fff; }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #111; }
+  ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #555; }
+}
+
+@layer components {
+  .glass {
+    background: rgba(17, 17, 17, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* ── glass-card: NO backdrop-filter (perf killer), solid bg instead ── */
+  .glass-card {
+    background: rgba(26, 26, 26, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    /* Only transition what actually changes on hover — NOT transition-all */
+    transition: border-color 0.04s ease-out, box-shadow 0.04s ease-out;
+  }
+  .glass-card:hover {
+    border-color: rgba(99, 102, 241, 0.3);
+    box-shadow: 0 8px 40px rgba(99, 102, 241, 0.08);
+  }
+
+  /* ── spotlight cursor glow ── */
+  .spotlight-card {
+    --mx: 50%;
+    --my: 50%;
+    --spot: rgba(99, 102, 241, 0.5);
+    position: relative;
+    overflow: hidden;
+  }
+  .spotlight-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: radial-gradient(500px circle at var(--mx) var(--my), var(--spot), transparent 65%);
+    opacity: 0;
+    transition: opacity 0.04s ease-out;
+    pointer-events: none;
+  }
+  .spotlight-card:hover::before { opacity: 0.16; }
+  .spotlight-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: radial-gradient(400px circle at var(--mx) var(--my), var(--spot), transparent 70%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.04s ease-out;
+    pointer-events: none;
+  }
+  .spotlight-card:hover::after { opacity: 1; }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-accent {
+    background: linear-gradient(135deg, #6366f1, #ffffff, #ec4899, #a855f7, #ffffff, #6366f1);
+    background-size: 300% 300%;
+    animation: gradientMove 8s ease infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  @keyframes gradientMove {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+  }
+
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    pointer-events: none;
+  }
+  .noise {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marqueeScroll 45s linear infinite;
+  }
+  .marquee-track:hover { animation-play-state: paused; }
+  @keyframes marqueeScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .nav-dot {
+    --nav-color: #6366f1;
+    @apply w-10 h-10 rounded-full flex items-center justify-center text-zinc-500 cursor-pointer;
+    transition: color 0.04s ease-out, background 0.04s ease-out, border-color 0.04s ease-out, box-shadow 0.04s ease-out;
+    background: rgba(26, 26, 26, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .nav-dot:hover, .nav-dot.active {
+    @apply text-white;
+    background: color-mix(in srgb, var(--nav-color) 15%, transparent);
+    border-color: color-mix(in srgb, var(--nav-color) 45%, transparent);
+    box-shadow: 0 0 20px color-mix(in srgb, var(--nav-color) 25%, transparent);
+  }
+
+  .icon-tile {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .icon-tile::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent 60%);
+    pointer-events: none;
+  }
+
+  .skill-pill {
+    @apply px-4 py-2 rounded-full text-sm font-medium cursor-default;
+    transition: border-color 0.04s ease-out, background 0.04s ease-out, transform 0.04s ease-out;
+    background: rgba(26, 26, 26, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .skill-pill:hover {
+    border-color: rgba(99, 102, 241, 0.4);
+    background: rgba(99, 102, 241, 0.1);
+    transform: scale(1.05);
+  }
+
+  /* ── CTA button — liquid fill from left on hover ── */
+  /* =========================================
+   PORTFOLIO CTA
+   Clean Developer + Premium UI
+   ========================================= */
+
+.portfolio-cta {
+  --indigo: #6366f1;
+  --indigo-light: #818cf8;
+
+  position: relative;
+
+  width: 100%;
+  min-height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 9px 10px 9px 20px;
+
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 16px;
+
+  background: #0d0d0d;
+
+  overflow: hidden;
+  isolation: isolate;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+
+/* =========================================
+   SUBTLE HOVER BACKGROUND
+   ========================================= */
+
+.portfolio-cta::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    105deg,
+    rgba(99, 102, 241, 0.12),
+    rgba(139, 92, 246, 0.07),
+    transparent 65%
+  );
+
+  opacity: 0;
+
+  transition: opacity 0.35s ease;
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   MOVING SHINE
+   ========================================= */
+
+.portfolio-cta::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: -80%;
+
+  width: 45%;
+  height: 100%;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.07),
+    transparent
+  );
+
+  transform: skewX(-20deg);
+
+  transition: left 0.65s ease;
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   TEXT
+   ========================================= */
+
+.portfolio-cta-text {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  color: #a1a1aa;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  transition:
+    color 0.25s ease,
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+/* Developer touch */
+
+.portfolio-cta-prefix {
+  color: rgba(129, 140, 248, 0.5);
+
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+
+/* =========================================
+   ICON
+   ========================================= */
+
+.portfolio-cta-icon {
+  position: relative;
+  z-index: 2;
+
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  color: #818cf8;
+
+  background: rgba(99, 102, 241, 0.07);
+
+  border: 1px solid rgba(99, 102, 241, 0.2);
+
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+/* =========================================
+   HOVER
+   ========================================= */
+
+.portfolio-cta:hover {
+  transform: translateY(-2px);
+
+  border-color: rgba(129, 140, 248, 0.42);
+
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.28),
+    0 0 25px rgba(99, 102, 241, 0.08);
+}
+
+.portfolio-cta:hover::before {
+  opacity: 1;
+}
+
+.portfolio-cta:hover::after {
+  left: 130%;
+}
+
+
+/* Text */
+
+.portfolio-cta:hover .portfolio-cta-text {
+  color: #ffffff;
+  transform: translateX(2px);
+}
+
+
+/* ~/ */
+
+.portfolio-cta:hover .portfolio-cta-prefix {
+  color: #818cf8;
+  transform: translateX(-2px);
+
+  text-shadow:
+    0 0 10px rgba(99, 102, 241, 0.5);
+}
+
+
+/* Icon */
+
+.portfolio-cta:hover .portfolio-cta-icon {
+  color: #ffffff;
+
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.3),
+    rgba(139, 92, 246, 0.2)
+  );
+
+  border-color: rgba(129, 140, 248, 0.4);
+
+  transform: translateX(2px) rotate(45deg);
+
+  box-shadow:
+    0 0 18px rgba(99, 102, 241, 0.15);
+}
+
+
+/* =========================================
+   CLICK
+   ========================================= */
+
+.portfolio-cta:active {
+  transform: translateY(0) scale(0.985);
+}
+
+
+/* =========================================
+   FOCUS
+   ========================================= */
+
+.portfolio-cta:focus-visible {
+  outline: none;
+
+  border-color: rgba(129, 140, 248, 0.5);
+
+  box-shadow:
+    0 0 0 3px rgba(99, 102, 241, 0.12),
+    0 0 22px rgba(99, 102, 241, 0.1);
+}
+
+
+/* =========================================
+   REDUCED MOTION
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-cta,
+  .portfolio-cta::before,
+  .portfolio-cta::after,
+  .portfolio-cta-text,
+  .portfolio-cta-prefix,
+  .portfolio-cta-icon {
+    transition: none;
+  }
+}
+/* =============================================
+   FUTURISTIC SKILL TILES
+   ============================================= */
+
+.skill-tile-futuristic {
+  position: relative;
+  border-radius: 14px;
+  cursor: default;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition-delay: var(--delay, 0ms);
+}
+.skill-tile-futuristic.skill-tile-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animated border layer */
+.skill-tile-border {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  z-index: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+/* Inner card */
+.skill-tile-inner {
+  position: relative;
+  z-index: 1;
+  padding: 18px 16px 14px;
+  border-radius: 14px;
+  background: rgba(26, 26, 26, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.skill-tile-futuristic:hover .skill-tile-inner {
+  border-color: color-mix(in srgb, var(--skill-color) 35%, transparent);
+  box-shadow:
+    0 0 24px color-mix(in srgb, var(--skill-color) 12%, transparent),
+    inset 0 0 20px color-mix(in srgb, var(--skill-color) 4%, transparent);
+}
+
+/* Floating glow orb */
+.skill-glow-orb {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  top: -10px;
+  right: -10px;
+  border-radius: 50%;
+  filter: blur(25px);
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+/* Icon wrapper */
+.skill-icon-wrap {
+  position: relative;
+  width: 42px;
+  height: 42px;
+}
+.skill-icon-box {
+  position: relative;
+  z-index: 2;
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.skill-tile-futuristic:hover .skill-icon-box {
+  transform: scale(1.1);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--skill-color) 20%, transparent);
+}
+
+/* Pulse ring behind icon */
+.skill-pulse-ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 14px;
+  border: 1px solid;
+  opacity: 0;
+  z-index: 1;
+  animation: skillPulse 3s ease-in-out infinite;
+}
+.skill-tile-futuristic:hover .skill-pulse-ring {
+  opacity: 1;
+}
+@keyframes skillPulse {
+  0%, 100% { transform: scale(1); opacity: 0; }
+  50% { transform: scale(1.3); opacity: 0.6; }
+}
+
+/* Name */
+.skill-name {
+  font-weight: 500;
+  font-size: 13px;
+  color: #fff;
+  transition: color 0.2s ease;
+}
+
+/* Proficiency bar */
+.skill-bar-track {
+  width: 100%;
+  height: 3px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+  position: relative;
+}
+.skill-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.8s ease-out;
+}
+.skill-bar-scan {
+  position: absolute;
+  top: 0;
+  left: -30%;
+  width: 30%;
+  height: 100%;
+  opacity: 0;
+  animation: skillScan 2.5s ease-in-out infinite;
+}
+.skill-tile-futuristic:hover .skill-bar-scan {
+  opacity: 1;
+}
+@keyframes skillScan {
+  0% { left: -30%; }
+  100% { left: 130%; }
+}
+
+/* Level badge on hover */
+.skill-level-badge {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Stats strip with animated border */
+.skill-stats-strip {
+  margin-top: 40px;
+  position: relative;
+  border-radius: 16px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(168,85,247,0.1), rgba(236,72,153,0.1), rgba(99,102,241,0.2));
+  background-size: 300% 300%;
+  animation: statsBorderShift 6s ease infinite;
+}
+@keyframes statsBorderShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.skill-stats-inner {
+  border-radius: 15px;
+  background: rgba(17, 17, 17, 0.92);
+  padding: 24px 20px;
+}
+
+
+/* =============================================
+   EXPERIENCE TIMELINE
+   ============================================= */
+
+.exp-timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Each timeline item: node + card side by side */
+.exp-timeline-item {
+  display: flex;
+  gap: 20px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition-delay: var(--delay, 0ms);
+  padding-bottom: 28px;
+}
+.exp-timeline-item:last-child {
+  padding-bottom: 0;
+}
+.exp-timeline-item.exp-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Timeline node column */
+.exp-timeline-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 20px;
+  padding-top: 24px;
+}
+
+/* Dot */
+.exp-node-dot {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #1a1a1a;
+  border: 2px solid #3f3f46;
+  z-index: 2;
+  flex-shrink: 0;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.exp-node-dot.exp-node-active {
+  border-color: #6366f1;
+  background: #6366f1;
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
+}
+
+/* Ping animation for active dot */
+.exp-node-ping {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid rgba(99, 102, 241, 0.4);
+  animation: expPing 2s ease-in-out infinite;
+}
+@keyframes expPing {
+  0%, 100% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.4); opacity: 1; }
+}
+
+/* Connector line between dots */
+.exp-node-line {
+  width: 2px;
+  flex: 1;
+  margin-top: 8px;
+  background: linear-gradient(to bottom, rgba(99, 102, 241, 0.3), rgba(255, 255, 255, 0.04));
+  border-radius: 2px;
+}
+
+/* Card */
+.exp-card {
+  flex: 1;
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(26, 26, 26, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.exp-card:hover {
+  border-color: rgba(99, 102, 241, 0.25);
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.06);
+}
+
+/* Scan line across top of card */
+.exp-card-scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #6366f1, transparent);
+  border-radius: 2px;
+  opacity: 0;
+  animation: expScanline 4s ease-in-out infinite;
+}
+.exp-card:hover .exp-card-scanline {
+  opacity: 1;
+}
+@keyframes expScanline {
+  0% { left: -60px; }
+  100% { left: calc(100% + 60px); }
+}
+
+/* Live badge */
+.exp-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+  background: rgba(34, 197, 94, 0.1);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  white-space: nowrap;
+}
+.exp-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+  animation: expLivePulse 1.5s ease-in-out infinite;
+}
+@keyframes expLivePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* Highlight row */
+.exp-highlight-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 0;
+  transition: transform 0.15s ease;
+}
+.exp-highlight-row:hover {
+  transform: translateX(4px);
+}
+
+/* Tags footer */
+.exp-card-footer {
+  padding: 12px 20px 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+.exp-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  color: #a1a1aa;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+.exp-tag:hover {
+  border-color: rgba(99, 102, 241, 0.3);
+  color: #c7d2fe;
+  background: rgba(99, 102, 241, 0.08);
+}
+
+/* Mobile: hide timeline nodes on small screens */
+@media (max-width: 640px) {
+  .exp-timeline-node { display: none; }
+  .exp-timeline-item { gap: 0; }
+}
+
+
+/* =============================================
+   CONTACT SEND BUTTON — FUTURISTIC
+   ============================================= */
+
+.contact-send-btn {
+  position: relative;
+  width: 100%;
+  height: 54px;
+  border: none;
+  border-radius: 14px;
+  background: transparent;
+  overflow: hidden;
+  isolation: isolate;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 4px;
+}
+
+/* Animated border beam — rotating conic gradient */
+.contact-btn-beam {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  z-index: 0;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--beam-angle, 0deg),
+    transparent 0%,
+    transparent 30%,
+    #6366f1 45%,
+    #a855f7 50%,
+    #6366f1 55%,
+    transparent 70%,
+    transparent 100%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: beamRotate 3s linear infinite;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+.contact-send-btn:hover .contact-btn-beam {
+  opacity: 1;
+}
+@keyframes beamRotate {
+  to { --beam-angle: 360deg; }
+}
+@property --beam-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* Background */
+.contact-btn-bg {
+  position: absolute;
+  inset: 1px;
+  border-radius: 13px;
+  z-index: 1;
+  background: #0d0d0d;
+  transition: background 0.3s ease;
+}
+.contact-send-btn:hover .contact-btn-bg {
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.1),
+    rgba(139, 92, 246, 0.06),
+    #0d0d0d
+  );
+}
+
+/* Content layer */
+.contact-btn-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12.5px;
+  letter-spacing: 0.03em;
+}
+
+/* $ prefix */
+.contact-btn-cmd {
+  color: rgba(129, 140, 248, 0.5);
+  font-weight: 700;
+  transition: color 0.25s ease, text-shadow 0.25s ease, transform 0.25s ease;
+}
+.contact-send-btn:hover .contact-btn-cmd {
+  color: #818cf8;
+  text-shadow: 0 0 12px rgba(99, 102, 241, 0.6);
+  transform: translateX(-2px);
+}
+
+/* Text */
+.contact-btn-text {
+  color: #a1a1aa;
+  transition: color 0.25s ease, text-shadow 0.25s ease;
+}
+.contact-send-btn:hover .contact-btn-text {
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(129, 140, 248, 0.15);
+}
+
+/* Icon wrapper */
+.contact-btn-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  color: #818cf8;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), background 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+.contact-send-btn:hover .contact-btn-icon-wrap {
+  transform: translateX(4px) rotate(45deg);
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(139, 92, 246, 0.15));
+  border-color: rgba(129, 140, 248, 0.45);
+  color: #fff;
+  box-shadow: 0 0 16px rgba(99, 102, 241, 0.2);
+}
+
+/* Active / click */
+.contact-send-btn:active {
+  transform: scale(0.985);
+}
+
+/* Focus */
+.contact-send-btn:focus-visible {
+  outline: none;
+}
+.contact-send-btn:focus-visible .contact-btn-beam {
+  opacity: 1;
+}
+
+/* Sending state */
+.contact-send-btn.sending {
+  cursor: wait;
+  pointer-events: none;
+}
+.contact-send-btn.sending .contact-btn-beam {
+  opacity: 0.8;
+  animation-duration: 1s;
+}
+.contact-send-btn.sending .contact-btn-text {
+  color: #818cf8;
+}
+
+/* Spinner */
+.contact-btn-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(129, 140, 248, 0.2);
+  border-top-color: #818cf8;
+  border-radius: 50%;
+  animation: contactSpin 0.7s linear infinite;
+}
+@keyframes contactSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* Disabled */
+.contact-send-btn:disabled:not(.sending) {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Bottom glow on hover */
+.contact-send-btn::after {
+  content: "";
+  position: absolute;
+  left: 15%;
+  right: 15%;
+  bottom: -8px;
+  height: 16px;
+  z-index: 0;
+  background: linear-gradient(90deg, transparent, rgba(99,102,241,0.4), rgba(168,85,247,0.35), transparent);
+  filter: blur(12px);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+.contact-send-btn:hover::after {
+  opacity: 0.8;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-btn-beam { animation: none; }
+  .contact-btn-spinner { animation: none; }
+  .skill-pulse-ring { animation: none; }
+  .skill-bar-scan { animation: none; }
+  .exp-card-scanline { animation: none; }
+  .exp-node-ping { animation: none; }
+  .exp-live-dot { animation: none; }
+  .skill-stats-strip { animation: none; }
+}}
