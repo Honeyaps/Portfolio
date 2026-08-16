@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { LenisProvider } from './lib/SmoothScroll'
 import ProfileCard from './components/ProfileCard'
@@ -15,10 +15,12 @@ import AnimatedBackground from './components/AnimatedBackground'
 export default function App() {
   const [activeSection, setActiveSection] = useState('home')
   const [loaded, setLoaded] = useState(false)
+  const ticking = useRef(false)
 
-  useEffect(() => {
-    setTimeout(() => setLoaded(true), 100)
-    const handleScroll = () => {
+  const handleScroll = useCallback(() => {
+    if (ticking.current) return
+    ticking.current = true
+    requestAnimationFrame(() => {
       const sections = ['home', 'about', 'skills', 'projects', 'experience', 'contact']
       for (const id of [...sections].reverse()) {
         const el = document.getElementById(id)
@@ -27,10 +29,15 @@ export default function App() {
           break
         }
       }
-    }
+      ticking.current = false
+    })
+  }, [])
+
+  useEffect(() => {
+    setTimeout(() => setLoaded(true), 100)
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [handleScroll])
 
   return (
     <LenisProvider>
@@ -45,7 +52,7 @@ export default function App() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4 }}
             >
-              {/* Profile card — fixed on desktop, never moves */}
+              {/* Profile card - fixed on desktop */}
               <div className="hidden lg:flex fixed left-0 top-0 h-screen items-center z-20" style={{ width: 'calc((100vw - 1400px) / 2 + 360px + 32px)', paddingLeft: 'max(32px, calc((100vw - 1400px) / 2 + 32px))' }}>
                 <ProfileCard />
               </div>
@@ -53,12 +60,12 @@ export default function App() {
               {/* Main layout */}
               <div className="max-w-[1400px] mx-auto px-4 md:px-8 relative z-10">
                 <div className="py-8">
-                  {/* Mobile — profile card in flow */}
+                  {/* Mobile - profile card in flow */}
                   <div className="lg:hidden mb-8">
                     <ProfileCard />
                   </div>
 
-                  {/* Right — scrollable content, offset for fixed card on desktop */}
+                  {/* Right - scrollable content */}
                   <div className="lg:ml-[392px]">
                     <HeroSection />
                     <MarqueeBanner />
@@ -71,7 +78,7 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Floating nav — right side */}
+              {/* Floating nav */}
               <FloatingNav active={activeSection} />
             </motion.div>
           )}

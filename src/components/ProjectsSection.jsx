@@ -12,7 +12,7 @@ function handleMove(e, color) {
 
 const projects = [
   {
-    title: 'OBD3 — Campaign Platform',
+    title: 'OBD3 - Campaign Platform',
     desc: 'Full-stack rewrite of a legacy Java outbound dialer. Node.js + React with real-time campaign orchestration, RBAC, voice management, and multi-tenant hierarchy.',
     tags: ['React', 'TypeScript', 'Node.js', 'MySQL', 'Redis'],
     color: '#6366f1',

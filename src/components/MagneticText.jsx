@@ -1,7 +1,7 @@
 import { useRef, useCallback } from 'react'
 
 /**
- * MagneticText — splits text into individual <span>s and scales characters
+ * MagneticText - splits text into individual <span>s and scales characters
  * near the mouse cursor, creating a magnifier / lens effect.
  *
  * Pure DOM writes (no React state on mousemove) → zero re-renders, buttery smooth.

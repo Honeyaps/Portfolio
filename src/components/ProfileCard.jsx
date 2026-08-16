@@ -74,7 +74,7 @@ export default function ProfileCard() {
         <p className="text-zinc-500 text-sm">Based in India</p>
       </div>
 
-      {/* Social links — each with unique hover color */}
+      {/* Social links - each with unique hover color */}
       <div className="flex items-center justify-center gap-3 mb-6">
         {socials.map(({ icon: Icon, href, label, color, bg, border }) => {
           const isMail = href.startsWith('mailto:')
@@ -108,7 +108,7 @@ export default function ProfileCard() {
         })}
       </div>
 
-      {/* CTA button — liquid fill from left */}
+      {/* CTA button - liquid fill from left */}
      <a
   href="#contact"
   onClick={smoothTo("contact")}

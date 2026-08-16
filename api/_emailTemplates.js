@@ -97,7 +97,7 @@ export function ownerNotificationTemplate({ name, email, message }) {
     </tr>`
 
   return {
-    subject: `📩 New message from ${name} — Portfolio`,
+    subject: `📩 New message from ${name} - Portfolio`,
     html: shell(body),
     text: `New portfolio message\n\nName: ${name}\nEmail: ${email}\nMessage: ${message}\n\nReceived: ${timestamp}`,
   }
@@ -122,7 +122,7 @@ export function visitorAutoReplyTemplate({ name }) {
           I've received your message and really appreciate you taking the time to connect.
         </p>
         <p style="margin:0 0 16px;font-size:15px;color:#374151;line-height:1.65;">
-          I'll go through it carefully and <strong>get back to you soon</strong> — usually within a day or two.
+          I'll go through it carefully and <strong>get back to you soon</strong> - usually within a day or two.
         </p>
         <p style="margin:0 0 24px;font-size:15px;color:#374151;line-height:1.65;">
           In the meantime, feel free to connect with me on LinkedIn.
@@ -134,7 +134,7 @@ export function visitorAutoReplyTemplate({ name }) {
     </tr>
     <tr>
       <td style="padding:24px 32px 30px;">
-        <p style="margin:0;font-size:14px;color:#111827;">— Hemant Singh</p>
+        <p style="margin:0;font-size:14px;color:#111827;">- Hemant Singh</p>
         <p style="margin:2px 0 0;font-size:12.5px;color:#9ca3af;">Full-Stack Developer</p>
       </td>
     </tr>`
@@ -142,6 +142,6 @@ export function visitorAutoReplyTemplate({ name }) {
   return {
     subject: `Thanks for reaching out, ${name}! I'll be in touch soon`,
     html: shell(body),
-    text: `Hi ${name},\n\nI've received your message and will get back to you soon.\n\nConnect with me on LinkedIn: ${LINKEDIN_URL}\n\n— Hemant Singh\nFull-Stack Developer`,
+    text: `Hi ${name},\n\nI've received your message and will get back to you soon.\n\nConnect with me on LinkedIn: ${LINKEDIN_URL}\n\n- Hemant Singh\nFull-Stack Developer`,
   }
 }

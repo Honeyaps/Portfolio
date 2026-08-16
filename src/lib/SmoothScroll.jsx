@@ -3,17 +3,8 @@ import Lenis from 'lenis'
 
 const LenisContext = createContext(null)
 
-// Smooth "ease-out expo" curve — fast start, silky settle. Feels quick, not sluggish.
 export const smoothEasing = (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t))
 
-/**
- * Wraps the app in a Lenis smooth-scroll instance and drives it off rAF.
- * No wrapper/content DOM is used, so `position: sticky` / `fixed` elements
- * (ProfileCard, FloatingNav) keep working exactly as before.
- *
- * Respects prefers-reduced-motion by simply not instantiating Lenis —
- * the browser falls back to normal native scrolling.
- */
 export function LenisProvider({ children }) {
   const rafRef = useRef(null)
   const [lenis, setLenis] = useState(null)
@@ -23,14 +14,12 @@ export function LenisProvider({ children }) {
     if (prefersReducedMotion) return
 
     const instance = new Lenis({
-      duration: 1.05,
+      duration: 0.8,          // Shorter = snappier, less "floaty"
       easing: smoothEasing,
       smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 1.5,
-      // Keep native touch scrolling on mobile — it's already smooth there
-      // and hijacking it tends to feel laggy/rubbery on phones.
-      syncTouch: false,
+      wheelMultiplier: 0.9,   // Slightly lower to avoid overshoot
+      touchMultiplier: 1.2,
+      syncTouch: false,       // Keep native touch on mobile
     })
 
     setLenis(instance)
@@ -54,11 +43,6 @@ export function useLenis() {
   return useContext(LenisContext)
 }
 
-/**
- * Returns a click handler that smoothly scrolls to an in-page anchor
- * (e.g. "#projects") via Lenis when available, falling back to the
- * native scrollIntoView for reduced-motion users.
- */
 export function useSmoothAnchor() {
   const lenis = useLenis()
 
@@ -68,7 +52,7 @@ export function useSmoothAnchor() {
     if (!target) return
 
     if (lenis) {
-      lenis.scrollTo(target, { offset: 0, duration: 1.1, easing: smoothEasing })
+      lenis.scrollTo(target, { offset: 0, duration: 0.9, easing: smoothEasing })
     } else {
       target.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }

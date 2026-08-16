@@ -1,4 +1,3 @@
-import { useState, useRef, useEffect } from 'react'
 import { useInView } from 'react-intersection-observer'
 import {
   SiReact, SiTypescript, SiNodedotjs, SiExpress, SiMysql,
@@ -7,120 +6,48 @@ import {
 import { FiGlobe, FiBox, FiPackage } from 'react-icons/fi'
 
 const skills = [
-  { name: 'React', icon: SiReact, color: '#22d3ee', level: 90 },
-  { name: 'TypeScript', icon: SiTypescript, color: '#3b82f6', level: 80 },
-  { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#06b6d4', level: 95 },
-  { name: 'Node.js', icon: SiNodedotjs, color: '#22c55e', level: 85 },
-  { name: 'Express', icon: SiExpress, color: '#a1a1aa', level: 85 },
-  { name: 'MySQL', icon: SiMysql, color: '#f97316', level: 75 },
-  { name: 'Redis', icon: SiRedis, color: '#ef4444', level: 70 },
-  { name: 'REST APIs', icon: FiGlobe, color: '#ec4899', level: 90 },
-  { name: 'Git', icon: SiGit, color: '#f97316', level: 85 },
-  { name: 'Linux / PM2', icon: SiLinux, color: '#eab308', level: 70 },
-  { name: 'shadcn/ui', icon: FiBox, color: '#fafafa', level: 80 },
-  { name: 'Zustand / Zod', icon: FiPackage, color: '#8b5cf6', level: 75 },
+  { name: 'React', icon: SiReact, color: '#22d3ee' },
+  { name: 'TypeScript', icon: SiTypescript, color: '#3b82f6' },
+  { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#06b6d4' },
+  { name: 'Node.js', icon: SiNodedotjs, color: '#22c55e' },
+  { name: 'Express', icon: SiExpress, color: '#a1a1aa' },
+  { name: 'MySQL', icon: SiMysql, color: '#f97316' },
+  { name: 'Redis', icon: SiRedis, color: '#ef4444' },
+  { name: 'REST APIs', icon: FiGlobe, color: '#ec4899' },
+  { name: 'Git', icon: SiGit, color: '#f97316' },
+  { name: 'Linux / PM2', icon: SiLinux, color: '#eab308' },
+  { name: 'shadcn/ui', icon: FiBox, color: '#fafafa' },
+  { name: 'Zustand / Zod', icon: FiPackage, color: '#8b5cf6' },
 ]
 
-/* ── Single skill tile with animated border + floating glow ── */
-function SkillTile({ skill, index, inView }) {
-  const tileRef = useRef(null)
-  const [mouse, setMouse] = useState({ x: 50, y: 50 })
-  const [hovered, setHovered] = useState(false)
+/* Split into two rows for the dual-marquee */
+const row1 = skills.slice(0, 6)
+const row2 = skills.slice(6)
 
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect()
-    setMouse({
-      x: ((e.clientX - rect.left) / rect.width) * 100,
-      y: ((e.clientY - rect.top) / rect.height) * 100,
-    })
-  }
-
+function SkillOrb({ skill }) {
   const Icon = skill.icon
-
   return (
-    <div
-      ref={tileRef}
-      className={`skill-tile-futuristic group ${inView ? 'skill-tile-visible' : ''}`}
-      style={{ '--delay': `${index * 60}ms`, '--skill-color': skill.color }}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      {/* Animated border gradient */}
-      <div
-        className="skill-tile-border"
-        style={{
-          background: hovered
-            ? `radial-gradient(120px circle at ${mouse.x}% ${mouse.y}%, ${skill.color}60, transparent 70%)`
-            : 'none',
-        }}
-      />
+    <div className="skills-orb" style={{ '--orb-color': skill.color }}>
+      <div className="skills-orb-ring" />
+      <div className="skills-orb-icon">
+        <Icon size={22} style={{ color: skill.color }} />
+      </div>
+      <span className="skills-orb-label">{skill.name}</span>
+    </div>
+  )
+}
 
-      {/* Inner content */}
-      <div className="skill-tile-inner">
-        {/* Floating glow orb behind icon */}
-        <div
-          className="skill-glow-orb"
-          style={{
-            background: `radial-gradient(circle, ${skill.color}25, transparent 70%)`,
-            opacity: hovered ? 1 : 0,
-          }}
-        />
-
-        {/* Icon container with pulse ring */}
-        <div className="skill-icon-wrap">
-          <div
-            className="skill-pulse-ring"
-            style={{
-              borderColor: `${skill.color}30`,
-              animationDelay: `${index * 200}ms`,
-            }}
-          />
-          <div
-            className="skill-icon-box"
-            style={{
-              background: `linear-gradient(135deg, ${skill.color}18, ${skill.color}08)`,
-              borderColor: `${skill.color}30`,
-            }}
-          >
-            <Icon size={20} style={{ color: skill.color }} className="relative z-10" />
-          </div>
-        </div>
-
-        {/* Name */}
-        <span className="skill-name">{skill.name}</span>
-
-        {/* Animated proficiency bar */}
-        <div className="skill-bar-track">
-          <div
-            className="skill-bar-fill"
-            style={{
-              width: inView ? `${skill.level}%` : '0%',
-              background: `linear-gradient(90deg, ${skill.color}60, ${skill.color})`,
-              transitionDelay: `${index * 60 + 400}ms`,
-            }}
-          />
-          {/* Scanning light effect */}
-          <div
-            className="skill-bar-scan"
-            style={{
-              background: `linear-gradient(90deg, transparent, ${skill.color}80, transparent)`,
-              animationDelay: `${index * 100}ms`,
-            }}
-          />
-        </div>
-
-        {/* Level % on hover */}
-        <span
-          className="skill-level-badge"
-          style={{
-            color: skill.color,
-            opacity: hovered ? 1 : 0,
-            transform: hovered ? 'translateY(0)' : 'translateY(4px)',
-          }}
-        >
-          {skill.level}%
-        </span>
+function MarqueeRow({ items, reverse = false }) {
+  const doubled = [...items, ...items, ...items, ...items]
+  return (
+    <div className="skills-marquee-row">
+      {/* Black fade edges */}
+      <div className="skills-marquee-fade-left" />
+      <div className="skills-marquee-fade-right" />
+      <div className={`skills-marquee-track ${reverse ? 'skills-marquee-reverse' : ''}`}>
+        {doubled.map((skill, i) => (
+          <SkillOrb key={`${skill.name}-${i}`} skill={skill} />
+        ))}
       </div>
     </div>
   )
@@ -137,19 +64,21 @@ export default function SkillsSection() {
           <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
           Tech stack
         </p>
-        <h2 className="font-display text-3xl md:text-4xl font-bold text-gradient mb-12">
+        <h2 className="font-display text-3xl md:text-4xl font-bold text-gradient mb-4">
           Tools I work with
         </h2>
+        <p className="text-zinc-500 text-sm mb-10 max-w-md">
+          Technologies I use daily to build fast, scalable, and beautiful products.
+        </p>
       </div>
 
-      {/* Futuristic skills grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-        {skills.map((skill, i) => (
-          <SkillTile key={skill.name} skill={skill} index={i} inView={inView} />
-        ))}
+      {/* Dual-row infinite marquee */}
+      <div className={`skills-marquee-wrap transition-opacity duration-700 ${inView ? 'opacity-100' : 'opacity-0'}`}>
+        <MarqueeRow items={row1} />
+        <MarqueeRow items={row2} reverse />
       </div>
 
-      {/* Bottom stat strip with scanning border animation */}
+      {/* Bottom stat strip */}
       <div
         className={`skill-stats-strip transition-opacity transition-transform duration-500
           ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
@@ -163,9 +92,9 @@ export default function SkillsSection() {
               { value: '3', label: 'Stack layers', color: '#f97316' },
               { value: '∞', label: 'Curiosity', color: '#ec4899' },
             ].map((stat) => (
-              <div key={stat.label} className="group cursor-default">
+              <div key={stat.label}>
                 <p
-                  className="font-display text-2xl md:text-3xl font-bold mb-1 group-hover:scale-110 transition-transform duration-150 inline-block"
+                  className="font-display text-2xl md:text-3xl font-bold mb-1 inline-block"
                   style={{ color: stat.color }}
                 >
                   {stat.value}

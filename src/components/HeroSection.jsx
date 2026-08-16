@@ -106,7 +106,7 @@ export default function HeroSection() {
         className="text-zinc-400 text-lg max-w-xl mb-6 leading-relaxed"
       >
         My passion lies in building elegant, high-performance web applications.
-        From complex enterprise platforms to polished user interfaces — I bring ideas to life with clean code and thoughtful design.
+        From complex enterprise platforms to polished user interfaces - I bring ideas to life with clean code and thoughtful design.
       </motion.p>
 
       {/* Skills pills */}

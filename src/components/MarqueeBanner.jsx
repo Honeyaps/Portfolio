@@ -4,13 +4,24 @@ export default function MarqueeBanner() {
 
   return (
     <div className="py-10 overflow-hidden relative">
+      {/* Black shadow fade — left */}
       <div
-        className="marquee-track"
+        className="pointer-events-none absolute left-0 top-0 bottom-0 z-10"
         style={{
-          WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)',
-          maskImage: 'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)',
+          width: '120px',
+          background: 'linear-gradient(to right, #0a0a0a 0%, #0a0a0a 20%, transparent 100%)',
         }}
-      >
+      />
+      {/* Black shadow fade — right */}
+      <div
+        className="pointer-events-none absolute right-0 top-0 bottom-0 z-10"
+        style={{
+          width: '120px',
+          background: 'linear-gradient(to left, #0a0a0a 0%, #0a0a0a 20%, transparent 100%)',
+        }}
+      />
+
+      <div className="marquee-track">
         {doubled.map((item, i) => (
           <span key={i} className="flex items-center gap-4 px-6 text-zinc-600 text-lg font-display font-medium whitespace-nowrap">
             {item}

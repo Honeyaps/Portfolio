@@ -7,9 +7,9 @@ const experiences = [
     company: 'NSPL',
     logo: '/assets/nspl_logo.png',
     location: 'India',
-    period: '2026 — Present',
+    period: '2026 - Present',
     current: true,
-    desc: 'Building OBD3 — a full rewrite of legacy Java telecom platform. React + TypeScript frontend, Node.js + Express backend, MySQL + Redis stack.',
+    desc: 'Building OBD3 - a full rewrite of legacy Java telecom platform. React + TypeScript frontend, Node.js + Express backend, MySQL + Redis stack.',
     tags: ['React', 'Node.js', 'TypeScript', 'MySQL', 'Redis', 'Express', 'Tailwind CSS', 'REST APIs', 'Git', 'Linux', 'PM2', 'Pino',, 'UI/UX Design', 'Performance Optimization', 'Continuous Integration', 'Deployment Automation', 'API Development', 'Testing & Debugging', 'Security Best Practices', 'WebSockets', 'WebRTC'],
     highlights: [
       'Rewrote legacy Java monolith into modern Node.js microservices',
@@ -23,9 +23,9 @@ const experiences = [
     company: 'Kommuno',
     logo: '/assets/kommuno_logo.png',
     location: 'India',
-    period: '2024 — 2025',
+    period: '2024 - 2025',
     current: false,
-    desc: 'My first professional role, where I transitioned from React into Angular while working across the full stack — building UI, integrating APIs, and developing backend services with Node.js.',
+    desc: 'My first professional role, where I transitioned from React into Angular while working across the full stack - building UI, integrating APIs, and developing backend services with Node.js.',
     tags: ['Angular', 'React', 'Node.js', 'TypeScript', 'REST APIs', 'MySQL', 'Git', 'UI/UX Design', 'Performance Optimization', 'Continuous Integration', 'Database Design', 'API Development', 'Testing & Debugging'],
     highlights: [
       'Learned Angular from scratch and applied it to build internal dashboards and tools',

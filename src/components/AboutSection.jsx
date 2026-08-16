@@ -6,25 +6,25 @@ const traits = [
   {
     icon: FiZap,
     title: 'Adaptive Engineer',
-    desc: 'Rapidly ramps up on new stacks and codebases — recently migrated a legacy Java/Spring Boot system to Node.js with zero production downtime.',
+    desc: 'Rapidly ramps up on new stacks and codebases - recently migrated a legacy Java/Spring Boot system to Node.js with zero production downtime.',
     color: '#6366f1',
   },
   {
     icon: FiLayers,
     title: 'End-to-End Ownership',
-    desc: 'Architect and ship complete features independently — from database schema design to production deployment and UI polish.',
+    desc: 'Architect and ship complete features independently - from database schema design to production deployment and UI polish.',
     color: '#a855f7',
   },
   {
     icon: FiSearch,
     title: 'Production-Grade Precision',
-    desc: 'Rigorous about edge cases and legacy behavior parity — the kind of attention that prevents bugs before they reach production.',
+    desc: 'Rigorous about edge cases and legacy behavior parity - the kind of attention that prevents bugs before they reach production.',
     color: '#ec4899',
   },
   {
     icon: FiUsers,
     title: 'Clear Communicator',
-    desc: 'Documents technical decisions clearly and keeps stakeholders aligned — bridges the gap between engineering and business needs.',
+    desc: 'Documents technical decisions clearly and keeps stakeholders aligned - bridges the gap between engineering and business needs.',
     color: '#f97316',
   },
 ]

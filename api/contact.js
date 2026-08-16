@@ -1,5 +1,5 @@
 // api/contact.js
-// Vercel serverless function — /api/contact
+// Vercel serverless function - /api/contact
 // This SAME file runs both locally (via `vercel dev`) and in production
 // (Vercel auto-deploys anything in /api). No separate server, no code
 // changes needed between local and production.
@@ -9,9 +9,9 @@
 //   2. A styled auto-reply to the VISITOR who submitted the form.
 //
 // Required environment variables (see .env.example):
-//   EMAIL_USER   — the Gmail address that sends the mail
-//   EMAIL_PASS   — a Gmail "App Password" (NOT your normal Gmail password)
-//   TO_EMAIL     — (optional) where owner notifications land. Defaults to EMAIL_USER.
+//   EMAIL_USER   - the Gmail address that sends the mail
+//   EMAIL_PASS   - a Gmail "App Password" (NOT your normal Gmail password)
+//   TO_EMAIL     - (optional) where owner notifications land. Defaults to EMAIL_USER.
 
 import nodemailer from 'nodemailer'
 import dns from 'node:dns'
@@ -79,11 +79,11 @@ export default async function handler(req, res) {
   lastSubmission.set(ip, now)
 
   if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-    console.error('EMAIL_USER / EMAIL_PASS env vars are not set — cannot send email')
+    console.error('EMAIL_USER / EMAIL_PASS env vars are not set - cannot send email')
     return res.status(500).json({ error: 'Email service is not configured' })
   }
 
-  console.log(`📩 Contact: ${name} (${email}) — ${message}`)
+  console.log(`📩 Contact: ${name} (${email}) - ${message}`)
 
   try {
     const mail = getTransporter()
@@ -116,7 +116,7 @@ export default async function handler(req, res) {
       console.error('Failed to send visitor auto-reply email:', replyResult.reason)
     }
 
-    // Owner notification is the critical one — auto-reply is a nice-to-have.
+    // Owner notification is the critical one - auto-reply is a nice-to-have.
     if (ownerResult.status === 'rejected') {
       throw ownerResult.reason
     }

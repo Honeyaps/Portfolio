@@ -11,7 +11,7 @@ export default function Footer() {
           </span>
         </div>
         <p className="text-xs text-zinc-600">
-          © {new Date().getFullYear()} — Built with React + Tailwind
+          © {new Date().getFullYear()} - Built with React + Tailwind
         </p>
       </div>
     </footer>
